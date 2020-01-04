@@ -1,5 +1,6 @@
 import os 
 import sys 
+import math
 
 
 class Solution:
@@ -10,12 +11,10 @@ class Solution:
 
 
     def driver(self, leftIndex:int, rightIndex:int, s:str):
-        print(leftIndex, rightIndex)
-
         ##if the right index = the left index then 
         ##recursive call with left Index +1 and right Index = to len(s)-1
         if rightIndex == leftIndex:
-            self.driver(leftIndex+1, len(s)-1, str)
+            return self.driver(leftIndex+1, len(s)-1, s)
         
 
         ##if leftIndex is at the end of the string
@@ -24,25 +23,30 @@ class Solution:
         ##if you found a matching character at left and right index
         ##check the characters between the matching characters
         if s[leftIndex] == s[rightIndex]:
+            tempStr = s[leftIndex:rightIndex+1]
             temp1 = leftIndex 
             temp2 = rightIndex 
             ##keeps track of the number of mathcing characters between the first match
             count = 0
-            for i in range((temp2-temp1)/2):
+            bound = int(len(tempStr)/2)
+            for i in range (0, bound):
                 if s[temp1] == s[temp2]:
                     count += 1 
                     temp1 += 1
                     temp2 -= 1
             
             ##if the entire substring between leftIndex and rightIndex is a palindrome
-            if count == (temp2 - temp1)/2:
-                count = 2*count
+            if count == bound:
+                count = len(tempStr)
                 leftIndex = rightIndex
                 rightIndex = len(s)-1
                 if count > self.maxPalindrome:
                     self.maxPalindrome = count
 
-                self.driver(leftIndex, rightIndex, s)
+                return self.driver(leftIndex, rightIndex, s)
             ##else if it was not a palindrome 
             else:
-                self.driver(leftIndex, rightIndex-1, s)
+                return self.driver(leftIndex, rightIndex-1, s)
+        
+        else:
+            return self.driver(leftIndex, rightIndex-1, s)

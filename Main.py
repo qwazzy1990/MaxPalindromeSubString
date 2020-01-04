@@ -3,8 +3,7 @@ import os
 
 from Solution import Solution
 
-
 if __name__ == "__main__":
-    print("Test")
     s = Solution()
-    print(s.driver(0, 7, "Haveever"))
+    st = "zzzzasssf169865ssacceeannassazyyyz476"
+    print(s.driver(0, len(st)-1, st))
